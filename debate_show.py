@@ -11,7 +11,11 @@ load_dotenv()  # 自动加载 .env 文件
 
 BASE_URL = os.getenv("QDD_BASE_URL")
 API_KEY  = os.getenv("QDD_API_KEY")
-MODEL_ID = os.getenv("QDD_MODEL",    "gpt-4o")
+MODEL_ID = os.getenv("QDD_MODEL",    "deepseek-ai/DeepSeek-R1-Distill-Llama-70B")
+
+# 🔧 修复：确保 BASE_URL 以 /v1 结尾（OpenAI 兼容接口需要）
+if BASE_URL and not BASE_URL.endswith('/v1'):
+    BASE_URL = BASE_URL.rstrip('/') + '/v1'
 
 model = ModelFactory.create(
     model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
